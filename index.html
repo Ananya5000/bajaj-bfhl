@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bajaj BFHL API UI</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 600px; margin: 50px auto; }
+    input, textarea, button { width: 100%; padding: 10px; margin: 10px 0; }
+    pre { background: #f0f0f0; padding: 10px; }
+  </style>
+</head>
+<body>
+  <h2>Bajaj BFHL API Tester</h2>
+  <p>Enter array elements separated by commas:</p>
+  <input type="text" id="inputData" placeholder='Example: a,1,334,4,R,$'>
+  <button onclick="submitData()">Submit</button>
+
+  <h3>Response:</h3>
+  <pre id="responseOutput"></pre>
+
+  <script>
+    async function submitData() {
+      const input = document.getElementById("inputData").value;
+      const arr = input.split(",").map(item => item.trim());
+
+      const responseOutput = document.getElementById("responseOutput");
+      responseOutput.textContent = "Loading...";
+
+      try {
+        const res = await fetch("https://bajaj-bfhl-52sx.onrender.com/bfhl", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ data: arr })
+        });
+
+        const data = await res.json();
+        responseOutput.textContent = JSON.stringify(data, null, 2);
+      } catch (err) {
+        responseOutput.textContent = "Error: " + err;
+      }
+    }
+  </script>
+</body>
+</html>
