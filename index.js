@@ -15,7 +15,6 @@ app.post("/bfhl", (req, res) => {
 
     data.forEach((str) => {
       if (/^-?\d+$/.test(str)) {
-        // number
         const num = parseInt(str);
         sum += num;
         if (num % 2 === 0) {
@@ -24,15 +23,11 @@ app.post("/bfhl", (req, res) => {
           odd_numbers.push(str);
         }
       } else if (/^[a-zA-Z]+$/.test(str)) {
-        // full alphabetic string
         alphabets.push(str.toUpperCase());
       } else {
-        // special char
         special_characters.push(str);
       }
     });
-
-    // concat_string: all alphabets joined, reversed, alternating caps
     let allChars = alphabets.join("");
     let reversed = allChars.split("").reverse().join("");
     let concat_string = "";
